@@ -1,5 +1,6 @@
 package tests;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class FAQTest {
+
     private WebDriver driver;
     private final int questionIndex;
     private final String expectedAnswer;
@@ -42,7 +44,7 @@ public class FAQTest {
 
     @Before
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "C:/WebDriver/bin/chromedriver.exe");
+        WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
@@ -55,10 +57,16 @@ public class FAQTest {
     public void checkFAQAnswerText() {
         MainPage mainPage = new MainPage(driver);
         mainPage.open();
-        mainPage.closeCookieConsent(); // <-- закрываем куки
+        mainPage.closeCookieConsent();
         mainPage.scrollToFAQ();
+
         String actualAnswer = mainPage.getAnswerText(questionIndex);
-        assertEquals("Текст ответа не совпадает для вопроса " + questionIndex, expectedAnswer, actualAnswer);
+
+        assertEquals(
+                "Текст ответа не совпадает для вопроса " + questionIndex,
+                expectedAnswer,
+                actualAnswer
+        );
     }
 
     @After

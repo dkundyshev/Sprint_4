@@ -57,9 +57,7 @@ public class OrderTest {
 
     @Before
     public void setUp() {
-
-        System.setProperty("webdriver.chrome.driver", "C:/WebDriver/bin/chromedriver.exe");
-
+        WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
@@ -72,7 +70,7 @@ public class OrderTest {
     public void orderScooterPositiveFlow() {
         MainPage mainPage = new MainPage(driver);
         mainPage.open();
-        mainPage.closeCookieConsent();   // закрываем куки-плашку
+        mainPage.closeCookieConsent();
         mainPage.clickOrderButton(button);
 
         OrderFormPage orderForm = new OrderFormPage(driver);
