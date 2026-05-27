@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 public class OrderFormPage {
     private WebDriver driver;
 
@@ -23,12 +25,19 @@ public class OrderFormPage {
         driver.findElement(nameField).sendKeys(name);
         driver.findElement(surnameField).sendKeys(surname);
         driver.findElement(addressField).sendKeys(address);
-        driver.findElement(metroStationField).click(); // фокус на поле
+
+        driver.findElement(metroStationField).click();
         driver.findElement(metroStationField).sendKeys(metro);
-        // Выбрать первую станцию из выпадающего списка (появляется после ввода)
-        new WebDriverWait(driver, 3)
-                .until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='select-search__select']//li[1]")));
-        driver.findElement(By.xpath("//div[@class='select-search__select']//li[1]")).click();
+
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.elementToBeClickable(
+                        By.xpath("//div[@class='select-search__select']//li[1]")
+                ));
+
+        driver.findElement(
+                By.xpath("//div[@class='select-search__select']//li[1]")
+        ).click();
+
         driver.findElement(phoneField).sendKeys(phone);
     }
 
