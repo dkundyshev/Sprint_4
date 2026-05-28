@@ -14,6 +14,7 @@ public class OrderFormPage {
     private By surnameField = By.xpath("//input[@placeholder='* Фамилия']");
     private By addressField = By.xpath("//input[@placeholder='* Адрес: куда привезти заказ']");
     private By metroStationField = By.xpath("//input[@placeholder='* Станция метро']");
+    private By firstMetroStationOption = By.xpath("//div[@class='select-search__select']//li[1]");
     private By phoneField = By.xpath("//input[@placeholder='* Телефон: на него позвонит курьер']");
     private By nextButton = By.xpath("//button[text()='Далее']");
 
@@ -30,13 +31,9 @@ public class OrderFormPage {
         driver.findElement(metroStationField).sendKeys(metro);
 
         new WebDriverWait(driver, Duration.ofSeconds(3))
-                .until(ExpectedConditions.elementToBeClickable(
-                        By.xpath("//div[@class='select-search__select']//li[1]")
-                ));
+                .until(ExpectedConditions.elementToBeClickable(firstMetroStationOption));
 
-        driver.findElement(
-                By.xpath("//div[@class='select-search__select']//li[1]")
-        ).click();
+        driver.findElement(firstMetroStationOption).click();
 
         driver.findElement(phoneField).sendKeys(phone);
     }
